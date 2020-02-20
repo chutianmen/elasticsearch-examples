@@ -119,16 +119,8 @@ Elasticsearch 会在7.0之后的版本废弃TransportClient，在8.0之后的版
 
 
 
-# 千锋Java教研院技术交流QQ群
+# Java技术交流QQ群
 
 **完整代码与资料下载，问题交流，请加QQ群，群号（799246477）：**
 
 ![](./docs/images/ma.png)
-
-## 参与贡献
-
-​      千锋Java教研院-大杜
-
-​      千锋Java教研院-老魏
-
-​      千锋Java教研院-老吕
