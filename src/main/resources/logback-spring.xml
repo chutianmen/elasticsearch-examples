@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <property name="LOG_PATTERN" value="[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                ${LOG_PATTERN}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/info.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/info-%d{yyyyMMdd}.log.%i
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                ${LOG_PATTERN}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="FILE-ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_PATH}/error.log</File>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error-%d{yyyyMMdd}.log.%i
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>50MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>2</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>
+                ${LOG_PATTERN}
+            </pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+
+    <springProfile name="dev">
+        <logger name="com.qianfeng.openapi.search" level="INFO">
+            <appender-ref ref="FILE-ERROR"/>
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="local">
+        <logger name="com.qianfeng" level="debug">
+            <appender-ref ref="FILE-ERROR"/>
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="com.qianfeng" level="INFO">
+            <appender-ref ref="FILE-ERROR"/>
+            <appender-ref ref="FILE-INFO"/>
+        </logger>
+    </springProfile>
+
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE-ERROR"/>
+        <appender-ref ref="FILE-INFO"/>
+    </root>
+
+
+    <include resource="org/springframework/boot/logging/logback/base.xml"/>
+    <jmxConfigurator/>
+
+</configuration>
